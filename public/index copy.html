@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Recieve alerts when your handicap changes.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    
+
+	<title>Golf GA</title>
+	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.0.0/jquery.serialize-object.compiled.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-yellow.min.css">
+	<script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+
+	<link rel="stylesheet" href="style/main.css">
+	<script src="js/main.js"></script>
+
+</head>
+
+<body>
+
+	<!-- HEADER -->
+
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <header class="mdl-layout__header">
+	    <div class="mdl-layout__header-row">
+	      <!-- Title -->
+	      <span class="mdl-layout-title">GA Golf</span>
+	      <!-- Add spacer, to align navigation to the right -->
+	      <div class="mdl-layout-spacer"></div>
+	      <!-- Navigation. We hide it in small screens. -->
+	      <nav class="mdl-navigation mdl-layout--large-screen-only">
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	        <a class="mdl-navigation__link" href="">Link</a>
+	      </nav>
+	    </div>
+	  </header>
+	  <div class="mdl-layout__drawer">
+	    <span class="mdl-layout-title">Title</span>
+	    <nav class="mdl-navigation">
+	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="">Link</a>
+	      <a class="mdl-navigation__link" href="">Link</a>
+	    </nav>
+	  </div>
+	  <main class="mdl-layout__content">
+		<a name="top"></a>
+		<!-- Body -->	    
+		<h3>beta app to alert when your GA changes</h3>
+		<p>Copy about how awesome this thing is.</p>
+
+		<div>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Sign Up</button>
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Log In</button>
+		</div>
+		<p>&nbsp;</p>
+		<a name="signup"></a>
+	        <div>
+	        	<h2>Sign up</h2>
+				<p>Please fill our the form below to sign up and start recieving alerts</p>
+
+				<div>
+				<form id="frmSignUp">
+					<div class="mdl-textfield mdl-js-textfield">
+						<label class="mdl-textfield__label" for="txtName">Name</label>
+						<input type="text" id="txtName" class="mdl-textfield__input" placeholder="Enter name" name="name" />
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield">
+						<label class="mdl-textfield__label" for="txtEmail">Email</label>
+						<input type="email" id="txtEmail" class="mdl-textfield__input" placeholder="Enter email" name="email" />
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield">
+						<label class="mdl-textfield__label" for="txtGolflink">Golflink Number</label>
+						<input type="text" id="txtGolflink" class="mdl-textfield__input" placeholder="Enter Golflink Number" name="golflink" />
+					</div>
+
+					<div class="mdl-textfield mdl-js-textfield">
+						<label class="mdl-textfield__label" for="txtPass">Password</label>
+						<input type="password" id="txtPass" class="mdl-textfield__input" placeholder="Enter Password" name="password" />
+					</div>
+
+					<button id="btnSignUp" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Sign up</button>
+
+				</form>
+
+				</div>
+			</div>
+
+			<!--TODO-->
+			<h2>Log in</h2>
+			<p>Enter log in details below</p>
+			<div>
+				<form id="frmLogIn">
+					
+					<div>
+						<label for="txtEmail">Email</label>
+						<input type="email" id="txtEmail" placeholder="Enter email" name="email" />
+					</div>
+
+					
+					<div>
+						<label for="txtPass">Password</label>
+						<input type="password" id="txtPass" placeholder="Enter Password" name="password" />
+					</div>
+
+					<button id="btnLogin" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Login</button>
+
+				</form>
+			</div>
+			<button id="btnGetUser" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Get User</button>
+		</div>
+	    
+	  </main>
+	</div>
+
+	
+
+
+	
+		
+<script>
+
+$( "#btnGetUser").click(function() {
+
+	
+	var user = myFirebaseRef.getAuth();
+	console.log(user.uid);
+	var userRef = myFirebaseRef.child('users').child(user.uid);
+	userRef.on("value", function(snapshot) {
+	  console.log(snapshot.val().name);
+	});
+
+
+});
+
+$( "#frmSignUp" ).submit(function(e) {
+  	
+  	var user = $(this).serializeObject();
+	console.log(user);  
+	e.preventDefault();
+  		
+	
+	myFirebaseRef.createUser(user, function(error, userData) {
+	  if (error) {
+	    switch (error.code) {
+	      case "EMAIL_TAKEN":
+	        console.log("The new user account cannot be created because the email is already in use.");
+	        break;
+	      case "INVALID_EMAIL":
+	        console.log("The specified email is not a valid email.");
+	        break;
+	      default:
+	        console.log("Error creating user:", error);
+	    }
+	  } else {
+	    console.log("Successfully created user account with uid:", userData.uid);
+	    userRef = myFirebaseRef.child('users').child(userData.uid);
+	    delete user.password;
+	    delete user.email;
+
+	    userRef.set(user, function onComplete() {
+	    	console.log("User extra fields set");
+	    });
+
+	  }
+	});
+
+
+});
+
+
+$( "#frmLogIn" ).submit(function(e) {
+
+	var user = $(this).serializeObject();
+	e.preventDefault();
+  	
+
+	myFirebaseRef.authWithPassword(user, function(error, authData) {
+	  if (error) {
+	    console.log("Login Failed!", error);
+	  } else {
+	    console.log("Authenticated successfully with payload:", authData);
+	  }
+	});
+
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "name": "golf-ga",
+  "version": "1.0.0",
+  "description": "Alerts users when their GA changes on golflink",
+  "main": "index.html",
+  "dependencies": {
+    "async": "^1.5.2",
+    "ejs": "^2.4.1",
+    "email-templates": "^2.3.0",
+    "firebase": "^2.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaroncollyer/golf-ga.git"
+  },
+  "keywords": [
+    "golf",
+    "ga",
+    "golflink",
+    "handicap",
+    "flag"
+  ],
+  "author": "Aaron Collyer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aaroncollyer/golf-ga/issues"
+  },
+  "homepage": "https://github.com/aaroncollyer/golf-ga#readme"
+}

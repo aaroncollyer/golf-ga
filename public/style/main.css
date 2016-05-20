@@ -1,0 +1,40 @@
+.hero-Container{
+	/*height: 100vh;*/
+	/* IE11 doesn't like min-height */
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: rgba(63, 81, 181, 0.6);
+	background-image: linear-gradient(rgba(63, 81, 181, 0.3), rgba(63, 81, 181, 0.3)), url("../img/hero-01.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	color: #FFFFFF;
+
+}
+
+.hero-Overlay {
+	padding:12% 5%;
+}
+
+.hero__text-button {
+
+	position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+
+}
+
+.singup-form {
+	margin: 0px auto;
+	max-width: 500px;
+}
+
+.singup-form .status { 
+	display:none;
+}
