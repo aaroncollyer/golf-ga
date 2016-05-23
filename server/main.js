@@ -1,3 +1,16 @@
+/*************************
+
+- Better performance with Async ?
+- golf link reject process
+- Email template build plus dynamic content
+- Test with Multiple people (Jerrym, Nick, Dan etc)
+- get process to exit on complete
+- Cron set up
+- GIT
+- Deploy to both server (heroku & firebase)
+
+/*************************/
+
 var Firebase = require("firebase");
 
 var emailBuilder = require("./sendEmail.js");
@@ -24,10 +37,11 @@ ref.once("value", function(snapshot) {
 			u.gameNew = uGameData;
 			
 			//if game is different save and alert
-			if (JSON.stringify(uGameData.gameCurrent) === JSON.stringify(uGameData.gameNew)){
+			if (u.gameCurrent.date == u.gameNew.date && u.gameCurrent.location == u.gameNew.location){
 				console.log("No change. Skip");
 			} else {
-				saveGame(uGameData, true);
+				console.log("New Round. Process")
+				saveGame(u, true);
 			};
 			
 		
